@@ -57,25 +57,42 @@ added to PATH under the name "nvim")
 > it has to appended to PATH in `~/.profile` and NOT `~/.bashrc`.
 
 To automatically open Neovim when clicking on files/console warnings or errors,
-Edit -> Preferences -> External Tools -> Set "External Script Editor" to Neovim
--> Adjust which packages to generate the .csproj files for (you will only get
-LSP functionalities for those selected packages):
+Edit -> Preferences -> External Tools -> Set "External Script Editor" to Neovim:
 
-<img width="961" height="336" alt="image" src="https://github.com/user-attachments/assets/8bcd00c4-923e-49fe-9823-37bce77e50f1" />
+<img width="498" height="98" alt="image" src="https://github.com/user-attachments/assets/f1dd73a0-3e13-412a-9cb3-7ff968d3244e" />
+
+If you don't see `Neovim vX.XX` in the dropdown list, then the automated nvim
+executable discovery has probably failed which means you should explicitly
+enter your nvim executable path in (top menu) `Neovim => Settings`:
+
+<img width="1326" height="771" alt="image" src="https://github.com/user-attachments/assets/ce823bff-9173-4be4-a273-2c1bed0e0eae" />
+
+As can be seen in the Neovim settings window above there a couple of settings
+that you can change (also a couple of things that you are encouraged to do).
+
+Adjust which packages to generate the .csproj files for (you will only get
+LSP functionalities for those selected packages). I usually simply tick them
+all (but be aware that for very large projects this might negatively affect
+the LSP performance):
+
+<img width="751" height="184" alt="image" src="https://github.com/user-attachments/assets/c29488d0-57bc-4e5e-8cda-ea0e534ede39" />
 
 You can also add a custom analyzer `.dll` through the `Browse` button. This is
-usefull for adding [Microsoft.Unity.Analyzers][unity-analyzers].
+usefull for adding [Microsoft.Unity.Analyzers][unity-analyzers] (which you
+are encouraged to do since this removes erroneous diagnostics about unused
+items):
+
+<img width="847" height="106" alt="image" src="https://github.com/user-attachments/assets/6ee36ad1-4f2e-4a52-81ab-af3895fc4b88" />
 
 ## Change Terminal Emulator Launch Command
 
 By default this package tries to find a default terminal emulator from a small
 list of *most-common* terminals (e.g., gnome-terminal, alacritty, etc.). Of
 course, if you want to supply by yourself which terminal emulator launch command
-to use for launching a new Neovim server instance then you can do so via the
-top menu option in the Unity Editor: `Neovim -> Change Terminal Launch Cmd` which
-will show the following popup:
+to use for launching a new Neovim server instance then you can do so via this
+section in `Neovim -> Settings`:
 
-<img width="1130" height="309" alt="image" src="https://github.com/user-attachments/assets/9646d85b-c14c-4565-b60f-6c522fb95ce4" />
+<img width="848" height="120" alt="image" src="https://github.com/user-attachments/assets/3e10b170-e157-4637-b37e-ead95d2ffdbf" />
 
 Where:
 - `{app}` -- is replaced by the current editor path (i.e., neovim path).
@@ -86,6 +103,10 @@ Where:
   is replaced by default to `/tmp/nvimsocket`. On Windows, this is replaced by
   default to `127.0.0.1:<RANDOM-PORT>` (with <RANDOM-PORT> a randomly chosen
   available port).
+
+> [!Note]
+> Placeholders are mentioned and explained in the right pannel of `Neovim -> Settings`
+> window.
 
 On Linux, it is advised to set the window name using something like:
 `--title "nvimunity"`. this is important for auto window focusing on GNOME.
@@ -103,38 +124,26 @@ of '=' separated environment-variable-name and value sets).
 By default this package uses `--server {serverSocket} --remote-tab {filePath}`
 as arguments for process execution when a request to open a file is instantiated
 (i.e., replaces args here: `{app} {args}` where `{app}` is the current editor
-executable path (i.e., Neovim path)). You can change this by using the top
-menu option in the Unity Editor: `Neovim -> Change Open-File Request Args`
-which will show the following popup:
+executable path (i.e., Neovim path)). You can change this via this section
+in `Neovim -> Setting` window:
 
-<img width="999" height="283" alt="image" src="https://github.com/user-attachments/assets/31cf85cf-deef-4fd2-8c35-468be67d8f15" />
+<img width="849" height="181" alt="image" src="https://github.com/user-attachments/assets/b6b38397-475b-469b-b2e3-936789d9d244" />
 
-Where:
-- `{filePath}` -- is replaced by the path to the requested file to be opened by
-  Neovim.
-- `{serverSocket}` -- is replaced by the path to the IPC socket between
-  the Neovim server instance and the client that will send commands. On Linux, this
-  is replaced by default to `/tmp/nvimsocket`. On Windows, this is replaced by
-  default to `127.0.0.1:<RANDOM-PORT>` (with <RANDOM-PORT> a randomly chosen
-  available port).
+You can also add modifier bindings so that depending on the modifier you are
+applying when you open a file a different cmd is executed (e.g., when SHIFT
+is pressed the file is opened in a vertical split).
 
 ## Change Jump-to-Cursor-Position Request Args
 
 By default this package uses
 `--server {serverSocket} --remote-send ":call cursor({line},{column})<CR>"` as
 arguments for process execution when a request to jump to cursor position is
-instantiated. You can change this by using the top menu option in the Unity
-Editor: `Neovim -> Change Jump-to-Cursor-Position Args` which will show the
-following popup:
+instantiated. You can change this via this section in `Neovim  -> Settings`
+window:
 
-<img width="990" height="282" alt="image" src="https://github.com/user-attachments/assets/80455f86-a3c1-4e4f-8fad-e11ad49c82e4" />
+<img width="848" height="80" alt="image" src="https://github.com/user-attachments/assets/56be05a5-b76b-4d7f-b802-94b8bb175b3c" />
 
 Where:
-- `{serverSocket}` -- is replaced by the path to the IPC socket between
-  the Neovim server instance and the client that will send commands. On Linux, this
-  is replaced by default to `/tmp/nvimsocket`. On Windows, this is replaced by
-  default to `127.0.0.1:<RANDOM-PORT>` (with <RANDOM-PORT> a randomly chosen
-  available port).
 - `{line}` -- is replaced by the line number that was requested to jump into.
 - `{column}` -- is replaced by the column number that was requested to jump into.
 
@@ -143,9 +152,9 @@ Where:
 You can also optionally change the process timeout (i.e., the time that this plugin
 waits for a process to launch - in case it does not launch within this timeout, it
 will be killed). Set this higher in case you are experiencing some issues especially
-with opening-a-new-file or jumping-to-cursor-position requests.
+with opening-a-new-file or jumping-to-cursor-position requests:
 
-<img width="500" height="258" alt="image" src="https://github.com/user-attachments/assets/121eacb9-aac0-4eec-85b3-4818e51065da" />
+<img width="848" height="59" alt="image" src="https://github.com/user-attachments/assets/81c8a676-e500-4060-bf81-e1677552aec8" />
 
 ## LSP is Not Working for a Particular Package?
 
@@ -238,8 +247,8 @@ command should be added/supported.
 
   Solution: see this issue #18. This plugin initially looks in PATH for nvim
   (or nvim.exe on Windows) and in case it fails it looks into a set of
-  *usual Neovim installation paths*. This will shortly be fixed by providing
-  a top-menu Unity option to provide the full path to a Neovim installation.
+  *usual Neovim installation paths*. You can explicitly provide your nvim
+  executable path in `Neovim -> Settings` then `ReimportAll` to refresh it.
 
 ## TODOs
 
@@ -259,6 +268,10 @@ just newer versions of Unity.
 
 PRs are squashed before being merged so do not pay a lof of attention to commit
 messages and commit structure.
+
+For heavily LLM-authored contributions, please try to reduce the verbosity (LLMs
+tend to be extremely verbose and perform very large changes at once). Otherwise,
+again, all contributions are welcome :-).
 
 ## License
 
