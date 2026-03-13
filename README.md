@@ -65,7 +65,7 @@ If you don't see `Neovim vX.XX` in the dropdown list, then the automated nvim
 executable discovery has probably failed which means you should explicitly
 enter your nvim executable path in (top menu) `Neovim => Settings`:
 
-<img width="1326" height="771" alt="image" src="https://github.com/user-attachments/assets/ce823bff-9173-4be4-a273-2c1bed0e0eae" />
+<img width="1380" height="808" alt="image" src="https://github.com/user-attachments/assets/92344e4c-2ec3-4b20-9008-0580bd9e8f30" />
 
 As can be seen in the Neovim settings window above there a couple of settings
 that you can change (also a couple of things that you are encouraged to do).
@@ -75,7 +75,7 @@ LSP functionalities for those selected packages). I usually simply tick them
 all (but be aware that for very large projects this might negatively affect
 the LSP performance):
 
-<img width="751" height="184" alt="image" src="https://github.com/user-attachments/assets/c29488d0-57bc-4e5e-8cda-ea0e534ede39" />
+<img width="962" height="208" alt="image" src="https://github.com/user-attachments/assets/613a1e89-367a-4984-8ff9-1fc2df6fb976" />
 
 You can also add a custom analyzer `.dll` through the `Browse` button. This is
 usefull for adding [Microsoft.Unity.Analyzers][unity-analyzers] (which you
