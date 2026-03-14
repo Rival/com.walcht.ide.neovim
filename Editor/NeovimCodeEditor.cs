@@ -27,7 +27,7 @@ namespace Neovim.Editor
     public static readonly string s_InstanceId = Process.GetCurrentProcess().Id.ToString();
 
 #if UNITY_EDITOR_LINUX || UNITY_EDITOR_OSX
-    static string s_ServerSocket = "/tmp/nvimsocket";
+    static string s_ServerSocket = $"/tmp/nvimsocket_{Process.GetCurrentProcess().Id}";
 #else // UNITY_EDITOR_WIN
     // this is initialized to some "127.0.0.1:<random-port>" because Unix domain sockets on Windows are a bitch
     // on Windows, listening to a domain socket yields the following error: "neovim Failed to --listen: service not
@@ -807,8 +807,8 @@ namespace Neovim.Editor
           {
             using var p = ProcessUtils.HeadlessProcess();
             p.StartInfo.FileName = "wmctrl";
-            p.StartInfo.Arguments = "-a nvimunity";
-            var error_msg = "[neovim.ide] failed to focus on Neovim server instance titled 'nvimunity'.\n"
+            p.StartInfo.Arguments = $"-a nvimunity-{s_InstanceId}";
+            var error_msg = $"[neovim.ide] failed to focus on Neovim server instance titled 'nvimunity-{s_InstanceId}'.\n"
               + $"Reason: cmd `{p.StartInfo.FileName}` with args `{p.StartInfo.Arguments}` failed.\n";
             try
             {
@@ -829,10 +829,10 @@ namespace Neovim.Editor
             // a clusterfuck of a mess - TODO: learn gdbus and clean this shit up somehow
             using var p = ProcessUtils.HeadlessProcess();
             p.StartInfo.FileName = "gdbus";
-            p.StartInfo.Arguments = @"call --session --dest org.gnome.Shell \
+            p.StartInfo.Arguments = $@"call --session --dest org.gnome.Shell \
 --object-path /de/lucaswerkmeister/ActivateWindowByTitle \
---method de.lucaswerkmeister.ActivateWindowByTitle.activateBySubstring 'nvimunity'";
-            const string error_msg = "[neovim.ide] failed to focus on Neovim server instance titled 'nvimunity'.\n"
+--method de.lucaswerkmeister.ActivateWindowByTitle.activateBySubstring 'nvimunity-{s_InstanceId}'";
+            string error_msg = $"[neovim.ide] failed to focus on Neovim server instance titled 'nvimunity-{s_InstanceId}'.\n"
                   + "Did you logout and login of your GNOME session?\n"
                   + "Did you install the 'activate-window-by-title@lucaswerkmeister.de' GNOME extension?\n";
             try
