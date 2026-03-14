@@ -73,10 +73,14 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:ScrollView>
-            <ui:VisualElement name="toolbar" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; align-self: auto; align-content: flex-start; align-items: stretch; position: relative; height: auto; width: auto; top: auto; left: auto; justify-content: flex-start; bottom: auto; right: auto;">
+            <ui:VisualElement name="toolbar" style="flex-grow: 0; flex-direction: row; flex-shrink: 0; align-self: auto; align-content: flex-start; align-items: stretch; position: relative; height: auto; width: auto; top: auto; left: auto; justify-content: flex-start; bottom: auto; right: auto; flex-wrap: wrap;">
                 <ui:Button text="Apply" name="apply" style="margin-right: 3px;"/>
                 <ui:Button text="[+] Add binding" name="add-binding"/>
                 <ui:VisualElement name="spacing" style="flex-grow: 1;"/>
+                <ui:Button text="Kill Orphaned Servers" name="kill-orphaned-btn" tooltip="Force-kills ALL orphaned nvim processes listening on /tmp/nvimsocket_* sockets. Use when Unity crashed and left zombie nvim servers behind. This is destructive: uses pkill/taskkill so unsaved buffers will be lost. Only affects nvim processes started by this plugin."/>
+                <ui:Button text="Force Reset" name="force-reset-btn" tooltip="Gracefully shuts down the current nvim server (sends :qa! to preserve swap files), then resets all plugin settings to defaults. Use when settings are corrupted or you want a clean start." style="margin-left: 3px;"/>
+                <ui:Toggle label="Kill nvim on quit" name="kill-nvim-on-quit-tg" tooltip="When enabled, the nvim server for this Unity instance is gracefully shut down (:qa!) when Unity quits. When disabled (default), the nvim session persists across Unity restarts — useful for keeping your editing session alive during recompilation." style="margin-left: 10px;"/>
+                <ui:VisualElement name="spacing2" style="flex-grow: 1;"/>
                 <ui:Button text="Regenerate project files" name="regenerate-project-files-btn"/>
                 <ui:Button text="Reset" name="reset" style="margin-left: 25px;"/>
             </ui:VisualElement>
